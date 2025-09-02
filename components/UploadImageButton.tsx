@@ -1,20 +1,43 @@
 import React from 'react';
-import { View, Button, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useImageLogic } from '../hooks/imageLogic'; 
+import { useFileSystemNames } from '@/hooks/useFileSystemNames';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ResizableImage from './resizeableImage';
+// Define the type for your component's props
+interface Props {
+  cardName: string;
+}
 
-export default function UploadImageButton() {
+export default function UploadImageButton({cardName}: Props) {
   // Use the custom hook to get state and functions
-  const { file, error, pickImage } = useImageLogic();
+  const { file, error, pickImage, deleteImage } = useImageLogic(cardName);
+  const {removeNameFromFile} = useFileSystemNames();
 
   return (
     <View style={styles.container}>
       {/* Display the image if a file exists */}
-      {file && <Image source={{ uri: file }} style={styles.image} />}
+      {/* {file &&
+        <Image source={{ uri: file }} style={styles.image}
+        />} */}
+        {file && <ResizableImage source={{ uri: file }} />}
 
       {/* Show an error message if one exists */}
       {error && <Text style={styles.errorText}>{error}</Text>}
 
-      <Button title="Add or Change Image" onPress={pickImage} />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() =>{
+            pickImage()
+          }}>
+          <Icon name="pencil" size={20} color="#fff" />
+        </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() =>{
+            deleteImage();
+            removeNameFromFile(cardName)
+          }}>
+          <Icon name="trash" size={20} color="#fff" />
+        </TouchableOpacity>
+        </View>
     </View>
   );
 }
@@ -34,5 +57,24 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginBottom: 10,
-  }
+  },
+    button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    marginLeft: 10,
+    fontSize: 16,
+  },
+    // Style for the new button container
+  buttonContainer: {
+    flexDirection: 'row', // Key style: aligns children horizontally
+    justifyContent: 'space-between', // Adds space between buttons
+    width: 100, // Adjust width to control spacing
+    marginTop: 10, // Adds some space below the image
+  },
 });

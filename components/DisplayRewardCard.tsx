@@ -11,7 +11,7 @@ export default function DisplayRewardCard({ cardName } : DisplayRewardCardProps)
     return (
         <View style={styles.container}>
             <Text style={styles.cardName}>Card Name: {cardName}</Text>
-            <UploadImageButton />
+            <UploadImageButton cardName={cardName}/>
         </View>
     );
 }

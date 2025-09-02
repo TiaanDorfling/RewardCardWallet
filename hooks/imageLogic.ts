@@ -4,10 +4,12 @@ import * as FileSystem from 'expo-file-system';
 import { Alert } from 'react-native';
 
 // The custom hook
-export const useImageLogic = () => {
+export const useImageLogic = (cardName:string) => {
   const [file, setFile] = useState<string | null>(null);
   const [error, setError] = useState(null);
-  const localImageUri = FileSystem.documentDirectory + 'new_image_name.jpg';
+  const [CardName, setName] = useState<string | null>(null);
+  const localImageUri = FileSystem.documentDirectory + cardName +'.jpg';
+
 
     const loadImageLocally = useCallback(async () => {
     try {
@@ -68,5 +70,22 @@ export const useImageLogic = () => {
     loadImageLocally();
   }, [loadImageLocally]);
 
-  return { file, error, pickImage, loadImageLocally };
+  const deleteImage = async () => {
+  try{
+  if (localImageUri) {
+    try {
+      await FileSystem.deleteAsync(localImageUri, { idempotent: true });
+      console.log('Image deleted successfully!');
+      setFile(null); // Clear the state to remove the image from the UI
+    } catch (e: any) {
+      console.error('Error deleting image:', e);
+      setError(e.message || 'Failed to delete image.');
+    }
+  }
+} catch {
+  console.error('No localImageUri passed')
+}
+};
+
+  return { file, error, pickImage, loadImageLocally, deleteImage };
 };
