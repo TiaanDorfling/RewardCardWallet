@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   rewardCard: {
     flexDirection: "column",
-    marginTop:10
+    marginTop:10,
   }
      
 });
