@@ -1,29 +1,27 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useImageLogic } from '../hooks/imageLogic'; 
+import { useBarcodeLogic } from '../hooks/useBarcodeLogic'; 
 import { useFileSystemNames } from '@/hooks/useFileSystemNames';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ResizableImage from './resizeableImage';
 // Define the type for your component's props
 interface Props {
   cardName: string;
 }
 
-export default function UploadImageButton({cardName}: Props) {
+export default function UploadBarcode({cardName}: Props) {
   // Use the custom hook to get state and functions
-  const { file, error, pickImage, deleteImage } = useImageLogic(cardName);
+  const { file, error, pickImage, deleteImage } = useBarcodeLogic(cardName);
   const {removeNameFromFile} = useFileSystemNames();
 
   return (
     <View style={styles.container}>
-        {file && <ResizableImage source={{ uri: file }} />}
-
+        {/* barcode here */}
       {/* Show an error message if one exists */}
       {error && <Text style={styles.errorText}>{error}</Text>}
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() =>{
-            pickImage()
+            pickImage()//needs to become edit barcode
           }}>
           <Icon name="pencil" size={20} color="#fff" />
         </TouchableOpacity>

@@ -1,6 +1,7 @@
 import React, {useState}from "react";
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
+import { useFileSystemBarcodes } from "@/hooks/useFileSystemBarcodes";
 import { useImageLogic } from "@/hooks/useImageLogic";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Alert } from 'react-native';
@@ -9,15 +10,19 @@ import { Barcode } from 'expo-barcode-generator';
 
 export default function AddNewCard(){
   const { saveNamesToFile, loadNamesFromFile } = useFileSystemNames();
+  const {saveCodesToFile, loadCodesFromFile} = useFileSystemBarcodes();
   const [names, setNames] = useState<string[]>([]);
+  const [codes, setCodes] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
   const [qrCodeInput, setQrCodeInput] = useState('');
   const {pickImage, openCamera} = useImageLogic();
 
     const fetchNames = async () => {
       const storedNames = await loadNamesFromFile();
+      const storedCodes = await loadCodesFromFile();
       if (storedNames) {
         setNames(storedNames);
+        setCodes(storedCodes);
         names.forEach(element => {
            console.log("name: "+ element); 
         });
@@ -84,11 +89,10 @@ export default function AddNewCard(){
 
   // If all validations pass, proceed with saving the data
   try {
-    // Save the new card name
+    // Save the new card name and code
     await saveNamesToFile(newCard);
+    await saveCodesToFile(QrCode);
 
-    // Placeholder for your QR code creation logic
-    // You would typically use a library here to generate the QR code
     console.log(`New card "${newCard}" added successfully.`);
     console.log(`Generating QR code for data: "${QrCode}"`);
 

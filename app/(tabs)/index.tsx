@@ -1,17 +1,25 @@
-import DisplayRewardCard from "@/components/DisplayRewardCard";
-import { View, StyleSheet,ScrollView, Button, TouchableOpacity } from "react-native";
+import DisplayRewardCard from "@/components/DisplayRewardCardImage";
+import DisplayRewardCardBarcode from "@/components/DisplayRewardCardBarcode";
+import { View, StyleSheet,ScrollView, Button } from "react-native";
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
+import { useFileSystemBarcodes } from "@/hooks/useFileSystemBarcodes";
 import { useState, useEffect } from "react";
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 export default function HomeScreen() {
   const {loadNamesFromFile} = useFileSystemNames();
+  const {loadCodesFromFile} = useFileSystemBarcodes();
   const [names, setNames] = useState<string[]>([]); 
+  const [codes, setCodes] = useState<string[]>([]); 
 
     const fetchNames = async () => {
       const storedNames = await loadNamesFromFile();
+      const storedCodes = await loadCodesFromFile();
       if (storedNames) {
         setNames(storedNames);
+      }
+      if (storedCodes){
+        setCodes(storedCodes);
       }
     };
 
@@ -21,15 +29,22 @@ export default function HomeScreen() {
 
     return(
     <ScrollView>
-    <View style={styles.container}>
+    {/* <View style={styles.container}>
       <Button title="🔃" onPress={fetchNames}/>
         {names.map((name, index) => (
           <View key={index} style={styles.rewardCard}>
           <DisplayRewardCard key={index} cardName={name} />
           </View>
         ))}
+    </View> */}
+    <View style={styles.container}>
+      <Button title="🔃" onPress={fetchNames}/>
+        {names.map((name, index) => (
+          <View key={index} style={styles.rewardCard}>
+          <DisplayRewardCardBarcode key={index} cardName={name} barcode={codes[index]}/>
+          </View>
+        ))}
     </View>
-
     </ScrollView>
     );
 }

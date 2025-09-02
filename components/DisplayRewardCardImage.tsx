@@ -7,7 +7,7 @@ interface DisplayRewardCardProps {
   cardName: string;
 }
 
-export default function DisplayRewardCard({ cardName } : DisplayRewardCardProps) {
+export default function DisplayRewardCardImage({ cardName } : DisplayRewardCardProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.cardName}>Card Name: {cardName}</Text>
