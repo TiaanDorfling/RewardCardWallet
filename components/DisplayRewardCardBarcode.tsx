@@ -12,8 +12,7 @@ export default function DisplayRewardCardBarcode({ cardName, barcode } : Display
     return (
         <View style={styles.container}>
             <Text style={styles.cardName}>Card Name: {cardName}</Text>
-            <Text>Barcode: {barcode}</Text>
-            <UploadBarcode cardName={cardName}/>
+            <UploadBarcode cardName={cardName} barcode={barcode}/>
         </View>
     );
 }

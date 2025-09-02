@@ -3,20 +3,29 @@ import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useBarcodeLogic } from '../hooks/useBarcodeLogic'; 
 import { useFileSystemNames } from '@/hooks/useFileSystemNames';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Barcode } from 'expo-barcode-generator';
+import ResizableBarcode from './resizeableBarcode';
 // Define the type for your component's props
 interface Props {
   cardName: string;
+  barcode: string;
 }
 
-export default function UploadBarcode({cardName}: Props) {
+export default function UploadBarcode({cardName, barcode}: Props) {
   // Use the custom hook to get state and functions
   const { file, error, pickImage, deleteImage } = useBarcodeLogic(cardName);
   const {removeNameFromFile} = useFileSystemNames();
 
   return (
     <View style={styles.container}>
-        {/* barcode here */}
-      {/* Show an error message if one exists */}
+
+        <View style={styles.barcode}>
+          <Barcode 
+            value={barcode}
+            options={{ format: 'EAN13', background: 'lightblue' }}
+          />
+        </View>
+
       {error && <Text style={styles.errorText}>{error}</Text>}
 
         <View style={styles.buttonContainer}>
@@ -71,4 +80,9 @@ const styles = StyleSheet.create({
     width: 100, // Adjust width to control spacing
     marginTop: 10, // Adds some space below the image
   },
+  barcode:{
+    backgroundColor: "white", // Set a clear background for the barcode view
+    marginTop: 15,
+    padding: 10,
+  }
 });
