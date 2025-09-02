@@ -1,15 +1,17 @@
 import React, {useState}from "react";
-import { View, StyleSheet, Button, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
 import { useImageLogic } from "@/hooks/useImageLogic";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Barcode from "react-native-barcode-builder";
+import { Alert } from 'react-native';
+import { Barcode } from 'expo-barcode-generator';
 
 
 export default function AddNewCard(){
   const { saveNamesToFile, loadNamesFromFile } = useFileSystemNames();
   const [names, setNames] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
+  const [qrCodeInput, setQrCodeInput] = useState('');
   const {pickImage, openCamera} = useImageLogic();
 
     const fetchNames = async () => {
@@ -24,7 +26,7 @@ export default function AddNewCard(){
 
 
   const uploadHandleSave = async (newCard: string) => {
-    fetchNames();
+    await fetchNames();
     if (newCard.trim() === ''){
         console.log('No card name entered.')
         setInputText('');
@@ -43,7 +45,7 @@ export default function AddNewCard(){
   };
 
     const cameraHandleSave = async (newCard: string) => {
-    fetchNames();
+    await fetchNames();
     if (newCard.trim() === ''){
         console.log('No card name entered.')
         setInputText('');
@@ -63,29 +65,93 @@ export default function AddNewCard(){
     //setNames([]) to clear array if validation fails
   };
 
+  const createQrCode = async (newCard: string, QrCode: string) => {
+  // Await the file system operation to get the latest data
+  await fetchNames();
+
+  // 1. Validate both inputs simultaneously
+  if (newCard.trim() === '' || QrCode.trim() === '') {
+    // 2. Provide user-friendly feedback
+    Alert.alert('Validation Error', 'Card Name and QR-Code fields cannot be empty.');
+    return; // Exit the function early
+  }
+
+  // 3. Check for existing card name after validating inputs
+  if (names.includes(newCard)) {
+    Alert.alert('Validation Error', 'This card name already exists.');
+    return; // Exit the function early
+  }
+
+  // If all validations pass, proceed with saving the data
+  try {
+    // Save the new card name
+    await saveNamesToFile(newCard);
+
+    // Placeholder for your QR code creation logic
+    // You would typically use a library here to generate the QR code
+    console.log(`New card "${newCard}" added successfully.`);
+    console.log(`Generating QR code for data: "${QrCode}"`);
+
+    // Reset the input fields on success
+    setInputText('');
+    setQrCodeInput('');
+    Alert.alert('Success', 'New card and QR code created!');
+
+  } catch (error) {
+    // Handle potential errors from file system operations
+    Alert.alert('Error', 'An error occurred while saving the card.');
+    console.error(error);
+  }
+};
+
     return(
-        <View style={styles.container}>
-          
-        <Text style={styles.lable}>Card Name: </Text>
-        <TextInput style={styles.input}
-            onChangeText={setInputText}
-            value={inputText}
-        />
-        
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() =>{
+    <View style={styles.container}>
+      
+
+      <Text style={styles.lable}>Card Name: </Text>
+      <TextInput style={styles.input}
+          onChangeText={setInputText}
+          value={inputText}
+      />
+      
+      <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() =>{
               uploadHandleSave(inputText);
-            }}>
+          }}>
             <Icon name="upload" size={20} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() =>{
               cameraHandleSave(inputText);
-            }}>
+          }}>
             <Icon name="camera" size={20} color="#fff" />
           </TouchableOpacity>
-        </View>
+      </View>
 
+      <Text style={styles.lable}>QR-Code: </Text>
+      <TextInput style={styles.input}
+          onChangeText={setQrCodeInput}
+          
+          value={qrCodeInput}
+          keyboardType="numeric"
+          maxLength={14}
+      />
+      
+      <TouchableOpacity style={styles.button} onPress={() =>{
+          createQrCode(inputText, qrCodeInput);
+      }}>
+        <Text style={styles.Text}>Create</Text>
+      </TouchableOpacity>
+
+      {(qrCodeInput || '').length === 13 && (
+        <View style={styles.barcode}>
+          <Barcode 
+            value={qrCodeInput}
+            options={{ format: 'EAN13', background: 'lightblue' }}
+          />
         </View>
+      )}
+    </View>
+
     );
 }
 
@@ -95,8 +161,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     backgroundColor: "silver",
-    width: 150,
-    height: 250,
+    width: 300,
+    height: 600,
     borderRadius: 15,
   },
   errorText: {
@@ -128,5 +194,13 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
+  },
+  Text:{
+    color:"white",
+  },
+  barcode:{
+    backgroundColor: "white", // Set a clear background for the barcode view
+    marginTop: 15,
+    padding: 10,
   }
 });

@@ -22,7 +22,7 @@ export default function HomeScreen() {
     return(
     <ScrollView>
     <View style={styles.container}>
-      <Button title="🔃" onPress={fetchNames} />
+      <Button title="🔃" onPress={fetchNames}/>
         {names.map((name, index) => (
           <View key={index} style={styles.rewardCard}>
           <DisplayRewardCard key={index} cardName={name} />
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
   rewardCard: {
     flexDirection: "column",
     marginTop:10,
+  },
+  Button:{
+    marginTop:15,
   }
      
 });
