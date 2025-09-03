@@ -8,12 +8,14 @@ Mobile Android app that holds your reward card details so that you don't have to
 
 ## User Story
 
-Anne - Anne is a mother of 2. She has to keep many items on her at all times, including toys, medicyne and sweets. She does not have room in her handbag to spare.
-     - Anne needs an app, that keeps her shopping reward cards on her phone, ready to scan in a moment.
-     - Anne does not have time to struggle with log in and navigating a website or big application, she just need her qr code ready to scan in a touch of a button.
-Sarah - Sarah is a freelance graphic designer who travels a lot for work. She is frequently in new cities for client meetings and events, and she accumulates a variety of loyalty and reward cards from different retailers and coffee shops. She can't keep track of all the           physical cards in her wallet and doesn't want to carry the extra bulk.
-      - Sarah needs a lightweight app to digitize all of her shopping loyalty cards. This app must be able to store a wide range of card types, from local cafes to large retail chains, so she can continue to earn rewards on the go.
-      - Sarah needs the app to be simple and fast, with the ability to scan a barcode or QR code instantly. When she's at the counter, she needs to pull up the correct card in a second, without having to navigate a complicated menu, ensuring a quick and smooth checkout             process.
+**Anne**
+     - Anne is a mother of 2. She has to keep many items on her at all times, including toys, medicyne and sweets. She does not have room in her handbag to spare. <br>
+     - Anne needs an app, that keeps her shopping reward cards on her phone, ready to scan in a moment. <br>
+     - Anne does not have time to struggle with log in and navigating a website or big application, she just need her qr code ready to scan in a touch of a button. <br>
+**Sarah**
+     - Sarah is a freelance graphic designer who travels a lot for work. She is frequently in new cities for client meetings and events, and she accumulates a variety of loyalty and reward cards from different retailers and coffee shops. She can't keep track of all the           physical cards in her wallet and doesn't want to carry the extra bulk. <br>
+     - Sarah needs a lightweight app to digitize all of her shopping loyalty cards. This app must be able to store a wide range of card types, from local cafes to large retail chains, so she can continue to earn rewards on the go. <br>
+     - Sarah needs the app to be simple and fast, with the ability to scan a barcode or QR code instantly. When she's at the counter, she needs to pull up the correct card in a second, without having to navigate a complicated menu, ensuring a quick and smooth checkout             process. <br>
 
 ---
 
