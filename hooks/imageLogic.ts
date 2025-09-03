@@ -7,7 +7,6 @@ import { Alert } from 'react-native';
 export const useImageLogic = (cardName:string) => {
   const [file, setFile] = useState<string | null>(null);
   const [error, setError] = useState(null);
-  const [CardName, setName] = useState<string | null>(null);
   const localImageUri = FileSystem.documentDirectory + cardName +'.jpg';
 
 
