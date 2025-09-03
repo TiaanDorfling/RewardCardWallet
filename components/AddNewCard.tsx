@@ -129,7 +129,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8FAFC', // Light gray background
     maxWidth: '100%',
     minHeight: '30%',
-    borderRadius: 5,
+    borderRadius: 9,
+    borderWidth:5,
+    borderColor: "#4dc7ffff",
   },
   errorText: {
     color: '#EF4444', // Modern red
