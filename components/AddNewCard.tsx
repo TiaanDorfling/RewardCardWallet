@@ -26,7 +26,7 @@ export default function AddNewCard(){
         if (storedCodes) {
             setCodes(storedCodes);
         }
-        
+
         // Return the fetched data directly
         return { names: storedNames || [], codes: storedCodes || [] };
     } catch (error) {

@@ -43,7 +43,7 @@ export default function HomeScreen() {
   };
 
   useEffect(() => {
-    // nukeEverything();
+    //nukeEverything();
     fetchNames();
   }, []); // Only runs once on component mount
 
