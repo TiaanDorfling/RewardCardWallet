@@ -2,7 +2,7 @@
 
 ---
 
-Mobile Android app that holds your reward card details so that you don't have to carry 10 different cards in your wallet.
+Mobile Android app that holds your reward card details and keeps your wallet light.
 
 ---
 
