@@ -2,11 +2,8 @@ import React, {useState}from "react";
 import { View, StyleSheet, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
 import { useFileSystemBarcodes } from "@/hooks/useFileSystemBarcodes";
-import { useImageLogic } from "@/hooks/useImageLogic";
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Alert } from 'react-native';
 import { Barcode } from 'expo-barcode-generator';
-import { text } from "stream/consumers";
 
 
 export default function AddNewCard(){
@@ -16,25 +13,31 @@ export default function AddNewCard(){
   const [codes, setCodes] = useState<string[]>([]);
   const [inputText, setInputText] = useState('');
   const [qrCodeInput, setQrCodeInput] = useState('');
-  const {pickImage, openCamera} = useImageLogic();
 
-    const fetchNames = async () => {
-      const storedNames = await loadNamesFromFile();
-      const storedCodes = await loadCodesFromFile();
-      if (storedNames) {
-        setNames(storedNames);
-        names.forEach(element => {
-           console.log("name: "+ element); 
-        });
-      }
-      if (storedCodes){
-        setCodes(storedCodes);
-      }
-    };
+    const fetchData = async () => {
+    try {
+        const storedNames = await loadNamesFromFile();
+        const storedCodes = await loadCodesFromFile();
+
+        // Update state for UI, but don't rely on it for validation
+        if (storedNames) {
+            setNames(storedNames);
+        }
+        if (storedCodes) {
+            setCodes(storedCodes);
+        }
+        
+        // Return the fetched data directly
+        return { names: storedNames || [], codes: storedCodes || [] };
+    } catch (error) {
+        console.error("Failed to fetch data:", error);
+        return { names: [], codes: [] }; // Return empty arrays on error
+    }
+};
 
   const createQrCode = async (newCard: string, QrCode: string) => {
   // Await the file system operation to get the latest data
-  await fetchNames();
+  const { names, codes } = await fetchData(); 
 
   // 1. Validate both inputs simultaneously
   if (newCard.trim() === '' || QrCode.trim() === '') {
@@ -44,8 +47,8 @@ export default function AddNewCard(){
   }
 
   // 3. Check for existing card name after validating inputs
-  if (names.includes(newCard)) {
-    Alert.alert('Validation Error', 'This card name already exists.');
+  if (names.includes(newCard.trim().toLowerCase()) || codes.includes(QrCode.trim().toLowerCase())) {
+    Alert.alert('Validation Error', 'The card name or barcode already exists.');
     return; // Exit the function early
   }
 
