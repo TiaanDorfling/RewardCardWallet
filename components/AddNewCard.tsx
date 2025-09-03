@@ -6,6 +6,7 @@ import { useImageLogic } from "@/hooks/useImageLogic";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Alert } from 'react-native';
 import { Barcode } from 'expo-barcode-generator';
+import { text } from "stream/consumers";
 
 
 export default function AddNewCard(){
@@ -84,13 +85,20 @@ export default function AddNewCard(){
       />
 
       <Text style={styles.lable}>QR-Code: </Text>
-      <TextInput style={styles.input}
-          onChangeText={setQrCodeInput}
-          placeholder="QR-Code"
-          placeholderTextColor={'gray'}
-          value={qrCodeInput}
-          keyboardType="numeric"
-          maxLength={14}
+      <TextInput 
+        style={styles.input}
+        onChangeText={(text) => { 
+          if (text.length > 13) {
+            setQrCodeInput(text.substring(0, 13)); 
+          } else {
+            setQrCodeInput(text); 
+          }
+        }}
+        placeholder="QR-Code"
+        placeholderTextColor={'gray'}
+        value={qrCodeInput}
+        keyboardType="numeric"
+        maxLength={20}
       />
       
       <TouchableOpacity style={styles.button} onPress={() =>{
