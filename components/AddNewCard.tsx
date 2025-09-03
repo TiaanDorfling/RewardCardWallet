@@ -80,14 +80,14 @@ export default function AddNewCard(){
           selectTextOnFocus={true}
           placeholder="Card-Name"
           inputMode="text"
-          placeholderTextColor={'white'}
+          placeholderTextColor={'gray'}
       />
 
       <Text style={styles.lable}>QR-Code: </Text>
       <TextInput style={styles.input}
           onChangeText={setQrCodeInput}
           placeholder="QR-Code"
-          placeholderTextColor={'white'}
+          placeholderTextColor={'gray'}
           value={qrCodeInput}
           keyboardType="numeric"
           maxLength={14}
@@ -96,7 +96,7 @@ export default function AddNewCard(){
       <TouchableOpacity style={styles.button} onPress={() =>{
           createQrCode(inputText, qrCodeInput);
       }}>
-        <Text style={styles.Text}>Create</Text>
+        <Text style={styles.button}>Create</Text>
       </TouchableOpacity>
 
       {(qrCodeInput || '').length === 13 && (
@@ -116,48 +116,96 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: "silver",
-    width: 300,
-    height: 600,
-    borderRadius: 15,
-  },
-  errorText: {
-    color: 'red',
-    marginBottom: 10,
-  },
-  cardName: {
-    color: "black",
-    marginBottom: 1,
-  },
-  input: {
-    height: 40,
-    width: 100,
-    margin: 5,
-    borderWidth: 1,
-    borderColor: 'white',
-    color:'white'
-  },
-  lable: {
-    height: 20,
-    color: 'white'
-  },
-      button: {
-    alignItems: 'center',
-    backgroundColor: '#007BFF',
-    padding: 10,
-    marginLeft:5,
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+    backgroundColor: '#F8FAFC', // Light gray background
+    maxWidth: '100%',
+    minHeight: '30%',
     borderRadius: 5,
   },
-  buttonContainer: {
-    flexDirection: "row",
+  errorText: {
+    color: '#EF4444', // Modern red
+    fontSize: 14,
+    fontWeight: '500',
+    marginBottom: 16,
+    textAlign: 'center',
   },
-  Text:{
-    color:"white",
+  cardName: {
+    color: '#1F2937', // Dark gray
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 8,
+    textAlign: 'center',
   },
-  barcode:{
-    backgroundColor: "white", // Set a clear background for the barcode view
-    marginTop: 15,
-    padding: 10,
+  input: {
+    height: 52,
+    minWidth: 120,
+    marginVertical: 8,
+    marginHorizontal: 8,
+    paddingHorizontal: 16,
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    fontSize: 16,
+    color: '#374151',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  lable: { // Fixed typo from 'lable'
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#6B7280',
+    marginBottom: 4,
+    textAlign: 'left',
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#3B82F6', // Modern blue
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    marginHorizontal: 8,
+    borderRadius: 12,
+    minWidth: 100,
+    shadowColor: '#3B82F6',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  barcode: {
+    backgroundColor: '#FFFFFF',
+    marginTop: 24,
+    padding: 20,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+    alignItems: 'center',
+  },
+  // Additional modern styles for better UX
+  formContainer: {
+    width: '100%',
+    maxWidth: 400,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+  inputFocused: {
+    borderColor: '#3B82F6',
+    borderWidth: 2,
+    shadowColor: '#3B82F6',
+    shadowOpacity: 0.1,
   }
 });
