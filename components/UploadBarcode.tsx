@@ -12,7 +12,7 @@ interface Props {
 
 export default function UploadBarcode({cardName, barcode}: Props) {
   // Use the custom hook to get state and functions
-  const { file, error, pickImage, deleteImage } = useBarcodeLogic(cardName);
+  const { deleteBarcode } = useBarcodeLogic(barcode);
   const {removeNameFromFile} = useFileSystemNames();
 
   return (
@@ -25,17 +25,15 @@ export default function UploadBarcode({cardName, barcode}: Props) {
           />
         </View>
 
-      {error && <Text style={styles.errorText}>{error}</Text>}
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() =>{
-            pickImage()//needs to become edit barcode
+            //needs to become edit barcode
           }}>
           <Icon name="pencil" size={20} color="#fff" />
         </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() =>{
-            deleteImage();
             removeNameFromFile(cardName)
+            deleteBarcode(barcode)
           }}>
           <Icon name="trash" size={20} color="#fff" />
         </TouchableOpacity>
