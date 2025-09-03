@@ -52,6 +52,11 @@ export default function AddNewCard(){
     return; // Exit the function early
   }
 
+  if (!isValidEAN13){
+    Alert.alert('Validation Error', 'The barcode is invalid.');
+    return; // Exit the function early    
+  }
+
   // If all validations pass, proceed with saving the data
   try {
     // Save the new card name and code
