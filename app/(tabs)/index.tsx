@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Button } from "react-native";
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
 import { useFileSystemBarcodes } from "@/hooks/useFileSystemBarcodes";
 import { useState, useEffect } from "react";
+import * as FileSystem from 'expo-file-system';
 
 export default function HomeScreen() {
   const { loadNamesFromFile } = useFileSystemNames();
@@ -21,7 +22,28 @@ export default function HomeScreen() {
     }
   };
 
+    const nukeEverything = async () => {
+    try {
+      const barcodeFileUri = `${FileSystem.documentDirectory}barcodes.json`;
+      const nameFileUri = `${FileSystem.documentDirectory}names.json`;
+      
+      // Clear both files
+      await FileSystem.writeAsStringAsync(barcodeFileUri, JSON.stringify([]));
+      await FileSystem.writeAsStringAsync(nameFileUri, JSON.stringify([]));
+      
+      console.log('🚀 NUKED! All data cleared on app open');
+      
+      // Set empty arrays in state
+      setNames([]);
+      setCodes([]);
+      
+    } catch (error) {
+      console.error('Nuke error:', error);
+    }
+  };
+
   useEffect(() => {
+    // nukeEverything();
     fetchNames();
   }, []); // Only runs once on component mount
 
