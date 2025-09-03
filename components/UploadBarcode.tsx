@@ -21,7 +21,7 @@ export default function UploadBarcode({cardName, barcode}: Props) {
         <View style={styles.barcode}>
           <Barcode 
             value={barcode}
-            options={{ format: 'EAN13', background: 'lightblue' }}
+            options={{ format: 'EAN13', background: 'white' }}
           />
         </View>
 

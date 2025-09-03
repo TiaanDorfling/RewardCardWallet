@@ -22,53 +22,14 @@ export default function AddNewCard(){
       const storedCodes = await loadCodesFromFile();
       if (storedNames) {
         setNames(storedNames);
-        setCodes(storedCodes);
         names.forEach(element => {
            console.log("name: "+ element); 
         });
       }
+      if (storedCodes){
+        setCodes(storedCodes);
+      }
     };
-
-
-  const uploadHandleSave = async (newCard: string) => {
-    await fetchNames();
-    if (newCard.trim() === ''){
-        console.log('No card name entered.')
-        setInputText('');
-                names.forEach(element => {
-            console.log("name: " + element)
-        });
-    } else if (names.includes(newCard)){
-        console.log('This card name already exists')
-        setInputText('');
-    } else {
-        await saveNamesToFile(newCard);
-        setInputText('');
-        await console.log('new card added.');
-        pickImage(newCard);
-    }
-  };
-
-    const cameraHandleSave = async (newCard: string) => {
-    await fetchNames();
-    if (newCard.trim() === ''){
-        console.log('No card name entered.')
-        setInputText('');
-                names.forEach(element => {
-            console.log("name: " + element)
-        });
-    } else if (names.includes(newCard)){
-        console.log('This card name already exists')
-        setInputText('');
-    } else {
-        await saveNamesToFile(newCard);
-        setInputText('');
-        await console.log('new card added.');
-        openCamera(newCard);
-    }
-
-    //setNames([]) to clear array if validation fails
-  };
 
   const createQrCode = async (newCard: string, QrCode: string) => {
   // Await the file system operation to get the latest data
@@ -116,25 +77,17 @@ export default function AddNewCard(){
       <TextInput style={styles.input}
           onChangeText={setInputText}
           value={inputText}
+          selectTextOnFocus={true}
+          placeholder="Card-Name"
+          inputMode="text"
+          placeholderTextColor={'white'}
       />
-      
-      <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() =>{
-              uploadHandleSave(inputText);
-          }}>
-            <Icon name="upload" size={20} color="#fff" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() =>{
-              cameraHandleSave(inputText);
-          }}>
-            <Icon name="camera" size={20} color="#fff" />
-          </TouchableOpacity>
-      </View>
 
       <Text style={styles.lable}>QR-Code: </Text>
       <TextInput style={styles.input}
           onChangeText={setQrCodeInput}
-          
+          placeholder="QR-Code"
+          placeholderTextColor={'white'}
           value={qrCodeInput}
           keyboardType="numeric"
           maxLength={14}
@@ -179,7 +132,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 80,
+    width: 100,
     margin: 5,
     borderWidth: 1,
     borderColor: 'white',
