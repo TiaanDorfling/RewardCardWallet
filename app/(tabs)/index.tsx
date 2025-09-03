@@ -1,4 +1,3 @@
-import DisplayRewardCard from "@/components/DisplayRewardCardImage";
 import DisplayRewardCardBarcode from "@/components/DisplayRewardCardBarcode";
 import { View, StyleSheet,ScrollView, Button } from "react-native";
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
@@ -29,14 +28,6 @@ export default function HomeScreen() {
 
     return(
     <ScrollView>
-    {/* <View style={styles.container}>
-      <Button title="🔃" onPress={fetchNames}/>
-        {names.map((name, index) => (
-          <View key={index} style={styles.rewardCard}>
-          <DisplayRewardCard key={index} cardName={name} />
-          </View>
-        ))}
-    </View> */}
     <View style={styles.container}>
       <Button title="🔃" onPress={fetchNames}/>
         {names.map((name, index) => (

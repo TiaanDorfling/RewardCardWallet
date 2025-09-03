@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useBarcodeLogic } from '../hooks/useBarcodeLogic'; 
 import { useFileSystemNames } from '@/hooks/useFileSystemNames';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Barcode } from 'expo-barcode-generator';
-import ResizableBarcode from './resizeableBarcode';
 // Define the type for your component's props
 interface Props {
   cardName: string;

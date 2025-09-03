@@ -31,11 +31,6 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: "#4dc7ffff",
   },
-  image: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
-  },
   errorText: {
     color: 'red',
     marginBottom: 10,
