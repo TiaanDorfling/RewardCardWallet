@@ -4,7 +4,6 @@ export const useFileSystemBarcodes = () => {
   const fileUri = `${FileSystem.documentDirectory}codes.json`;
 
 
-  // Replace your existing loadCodesFromFile function with this safer version
   const loadCodesFromFile = async (): Promise<string[]> => {
     try {
       const fileExists = await FileSystem.getInfoAsync(fileUri);

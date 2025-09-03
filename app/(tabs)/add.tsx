@@ -1,5 +1,5 @@
 import AddNewCard from "@/components/AddNewCard";
-import { View, StyleSheet,ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useFileSystemNames } from "@/hooks/useFileSystemNames";
 import { useState, useEffect } from "react";
 
@@ -21,7 +21,6 @@ export default function Add(){
 
     return(
             <View style={styles.container}>
-              {/* <DisplayRewardCard cardName="Spar" /> */}
               <AddNewCard />
             </View>
 
