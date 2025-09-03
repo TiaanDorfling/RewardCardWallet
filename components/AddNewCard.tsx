@@ -73,6 +73,32 @@ export default function AddNewCard(){
   }
 };
 
+const isValidEAN13 = (ean : string) => {
+  // A valid EAN-13 must be a 13-digit string.
+  if (!/^\d{13}$/.test(ean)) {
+    return false;
+  }
+
+  // Split the number into digits.
+  const digits = ean.split('').map(Number);
+  
+  // Calculate the sum of digits at odd positions (1st, 3rd, 5th, etc.).
+  const oddSum = digits.slice(0, 12).filter((_, index) => index % 2 === 0).reduce((sum, digit) => sum + digit, 0);
+
+  // Calculate the sum of digits at even positions (2nd, 4th, 6th, etc.), and multiply by 3.
+  const evenSum = digits.slice(0, 12).filter((_, index) => index % 2 !== 0).reduce((sum, digit) => sum + digit, 0);
+  const totalSum = oddSum + (evenSum * 3);
+  
+  // The check digit is the last digit of the number.
+  const checkDigit = digits[12];
+  
+  // The checksum is the last digit of the total sum.
+  const checksum = totalSum % 10;
+  
+  // If the checksum is 0, the check digit should also be 0. Otherwise, the check digit should be 10 minus the checksum.
+  return (checksum === 0 && checkDigit === 0) || (checkDigit === 10 - checksum);
+};
+
     return(
     <View style={styles.container}>
       
@@ -97,6 +123,7 @@ export default function AddNewCard(){
             setQrCodeInput(text); 
           }
         }}
+        selectTextOnFocus={true}
         placeholder="QR-Code"
         placeholderTextColor={'gray'}
         value={qrCodeInput}
@@ -110,12 +137,17 @@ export default function AddNewCard(){
         <Text style={styles.button}>Create</Text>
       </TouchableOpacity>
 
-      {(qrCodeInput || '').length === 13 && (
+      {isValidEAN13(qrCodeInput) && (
         <View style={styles.barcode}>
           <Barcode 
             value={qrCodeInput}
             options={{ format: 'EAN13', background: 'lightblue' }}
           />
+        </View>
+      )}
+      {!isValidEAN13(qrCodeInput) && (
+        <View style={styles.barcode}>
+          <Text>Not a valid barcode value</Text>
         </View>
       )}
     </View>
