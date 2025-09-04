@@ -42,8 +42,15 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "f9c20531-01f2-44f5-9175-7dfafad011e9"
+        "projectId": "ec997bd2-01d7-4f87-a070-4e3b3dcf670f"
       }
+    },
+    "owner": "slippyvrottel",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ec997bd2-01d7-4f87-a070-4e3b3dcf670f"
     }
   }
 }
