@@ -15,7 +15,7 @@
     },
     "production": {
       "autoIncrement": true,
-      "distribution": "internal"  // Add this line
+      "distribution": "internal" 
     }
   },
   "submit": {
